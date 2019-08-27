@@ -12,6 +12,10 @@ function ViewModel() {
   self.goalInputName = ko.observable();
   self.goalInputType = ko.observable();
   self.goalInputDeadline = ko.observable();
+  self.selectedGoals = ko.observableArray();
+  self.canEdit = ko.computed(function() {
+    return self.selectedGoals().length > 0;
+  });
 
   self.addGoal = function() {
     var name = $("#name").val();
@@ -40,6 +44,26 @@ function ViewModel() {
         console.log(err);
       }
     });
+  };
+
+  self.deleteSelected = function() {
+    $.each(self.selectedGoals(), function(index, value) {
+      let id = self.selectedGoals()[index]._id;
+      $.ajax({
+        url: `${URL}/goals/${id}`,
+        type: "DELETE",
+        async: true,
+        timeout: 300000,
+        success: function(data) {
+          console.log("Goal Removed...");
+        },
+        error: function(xhr, status, err) {
+          console.log(err);
+        }
+      });
+    });
+    self.goals.removeAll(self.selectedGoals());
+    self.selectedGoals.removeAll();
   };
 
   self.types = ko.observableArray([
