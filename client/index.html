@@ -21,8 +21,8 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <body onload="getGoals()">
+    <nav class="navbar navbar-expand-md navbar-default bg-light mb-5">
       <div class="container">
         <a class="navbar-brand" href="#">Goal Tracker</a>
         <button
@@ -41,8 +41,45 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-md-12"></div>
+        <div class="col-md-3">
+          <input data-bind="value: goalInputName" id="name" type="text" class="form-control" placeholder="Enter Goal...">
+        </div>
+        <div class="col-md-3">
+          <select data-bind="value: goalInputType, options: types, optionsCaption: 'Choose Goal Type'" id="type" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+          <input data-bind="value: goalInputDeadline" type="date" id="deadline" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <button data-bind="click: addGoal" class="btn btn-primary">Add Goal</button>
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach: goals">
+              <tr>
+                <td>
+                  <input type="checkbox">
+                </td>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: type"></td>
+                <td data-bind="text: deadline"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>

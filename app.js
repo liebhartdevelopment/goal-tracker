@@ -2,12 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongojs = require("mongojs");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
 const db = mongojs("goaltracker", ["goals"]);
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(express.static(path.join(__dirname, "client")));
 
 // index route
